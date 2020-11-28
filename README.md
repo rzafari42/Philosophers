@@ -4,4 +4,4 @@ work on the same memory space.
 We use threads, mutex, semaphore and shared memory.
 
 resources: 
-https://franckh.developpez.com/tutoriels/posix/pthreads/#LIV-A
+https://franckh.developpez.com/tutoriels/posix/pthreads/#LIV-A  
