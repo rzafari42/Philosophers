@@ -1,0 +1,34 @@
+typedef struct	s_arg
+{
+	int					nb_philos;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
+	int					nb_must_eat;
+	int					died;
+	int					condstop;
+	long				start;
+	pthread_mutex_t		*fork;
+	pthread_mutex_t		*pro;
+	pthread_mutex_t		printstatus;
+	pthread_mutex_t		checkifstop;
+}				t_arg;
+
+typedef struct	s_philo
+{
+	int			philo_num;
+	long		lastmeal;
+	int			mealnum;
+	pthread_t	threads;
+	pthread_t	monitor;
+	t_arg		*arg;
+}				t_philo;
+
+typedef enum	e_status
+{
+	Fork,
+	Eat,
+	Sleep,
+	Think,
+	Died
+}				t_status;

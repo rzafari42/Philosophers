@@ -1,62 +1,71 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/18 17:05:45 by rzafari           #+#    #+#             */
+/*   Updated: 2021/03/18 17:05:45 by rzafari          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_one.h"
 
-void		print(t_philo *philo, t_status status, long time)
+void	print(t_philo *philo, t_status status)
 {
-	pthread_mutex_lock(&(philo->arg->status));
+	long time;
+
+	pthread_mutex_lock(&(philo->arg->printstatus));
+	time = get_time() - philo->arg->start;
 	if (philo->arg->died == 1)
 	{
-		pthread_mutex_unlock(&(philo->arg->status));
+		pthread_mutex_unlock(&(philo->arg->printstatus));
 		return ;
 	}
 	if (status == Fork)
 		printf("%-2ld %6d has taken a fork\n", time, philo->philo_num + 1);
-	if (status == Eat)
+	else if (status == Eat)
 		printf("%-2ld %6d is eating\n", time, philo->philo_num + 1);
-	if (status == Sleep)
-    	printf("%-2ld %6d is sleeping\n", time, philo->philo_num + 1);
-	if (status == Think)
-    	printf("%-2ld %6d is thinking\n", time, philo->philo_num + 1);
-	if (status == Died)
+	else if (status == Sleep)
+		printf("%-2ld %6d is sleeping\n", time, philo->philo_num + 1);
+	else if (status == Think)
+		printf("%-2ld %6d is thinking\n", time, philo->philo_num + 1);
+	else if (status == Died)
 	{
-    	printf("%-2ld %6d died\n", time, philo->philo_num + 1);
+		printf("%-2ld %6d died\n", time, philo->philo_num + 1);
 		philo->arg->died = 1;
 	}
-	pthread_mutex_unlock(&(philo->arg->status));
+	pthread_mutex_unlock(&(philo->arg->printstatus));
 }
 
-long    get_time()
+long	get_time(void)
 {
-    struct timeval t2;
+	struct timeval t2;
 
-    gettimeofday(&t2, NULL);
-    return (t2.tv_sec * 1000 + t2.tv_usec / 1000);
+	gettimeofday(&t2, NULL);
+	return (t2.tv_sec * 1000 + t2.tv_usec / 1000);
 }
 
-void		ft_wait(long timetowait)
+void	ft_wait(long timetowait)
 {
 	long time;
 
 	time = get_time();
 	while (get_time() < time + timetowait)
-	{
 		usleep(500);
-	}
 }
 
-void printtest(t_arg *args)
+void	printtest(t_arg *args)
 {
-    printf("number_of_philosopher = %d\n", args->number_of_philosopher);
-    printf("time_to_die = %d\n", args->time_to_die);
-    printf("time_to_eat = %d\n", args->time_to_eat);
-    printf("time_to_sleep = %d\n", args->time_to_sleep);
-    printf("number_of_time_each_philosophers_must_eat = %d\n", args->number_of_time_each_philosophers_must_eat);
-    //printf("died = %d\n", args->philo_info->died);
-   /* printf("eat = %d\n", args->philo.eat);
-    printf("sleep = %d\n", args->philo.sleep);
-    printf("think = %d\n", args->philo.think);*/
+	printf("nb_philos = %d\n", args->nb_philos);
+	printf("time_to_die = %d\n", args->time_to_die);
+	printf("time_to_eat = %d\n", args->time_to_eat);
+	printf("time_to_sleep = %d\n", args->time_to_sleep);
+	printf("nb_must_eat = %d\n", args->nb_must_eat);
 }
 
-int	ft_atoi(const char *str)
+int		ft_atoi(const char *str)
 {
 	int sign;
 	int ans;
