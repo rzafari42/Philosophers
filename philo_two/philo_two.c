@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_one.c                                        :+:      :+:    :+:   */
+/*   philo_two.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:06:18 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/23 17:15:12 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/03/25 21:57:32 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ int	philo_info_init(t_arg *arg, t_philo **philo)
 
 	i = 0;
 	if (!(*philo = (t_philo *)malloc(sizeof(t_philo) * arg->nb_philos)) ||
-	!(arg->fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) *
-	arg->nb_philos)) ||
-	!(arg->pro = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) *
-	arg->nb_philos)))
+	!(arg->pro = malloc(sizeof(sem_t *) * arg->nb_philos)))
 	{
 		printf("Malloc philo in philo_info_init failed, sorry\n");
 		return (0);
@@ -54,13 +51,14 @@ int	main(int ac, char **av)
 		return (0);
 	if (!philo_info_init(&arg, &philo)
 	|| !start_time(&arg)
-	|| !create_mutex(&philo, arg.nb_philos)
+	|| !create_pro_sem_id(&philo)
+	|| !create_sem(&philo, arg.nb_philos)
 	|| !create_thread(&philo, arg.nb_philos))
 	{
-		destroy(&philo, arg.nb_philos);
+		destroy(&philo, arg.nb_philos, 1);
 		return (0);
 	}
 	wait_threads(&philo, arg.nb_philos);
-	destroy(&philo, arg.nb_philos);
+	destroy(&philo, arg.nb_philos, 1);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:00:06 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/25 14:15:00 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/03/25 20:00:45 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int		meals_eaten(t_philo *philo)
 	int stop;
 
 	stop = 0;
-	pthread_mutex_lock(&(philo->arg->checkifstop));
+	sem_wait(philo->arg->checkifstop);
 	if (philo->arg->nb_must_eat && philo->mealnum == philo->arg->nb_must_eat)
 		stop = 1;
-	pthread_mutex_unlock(&(philo->arg->checkifstop));
+	sem_post(philo->arg->checkifstop);
 	return (stop);
 }
 
@@ -33,12 +33,12 @@ void	*check_die_cond(void *philosopher)
 	philo = (t_philo *)philosopher;
 	while ((philo->arg->died) != 1 && !meals_eaten(philo))
 	{
-		pthread_mutex_lock(&(philo->arg->pro[philo->philo_num]));
+		sem_wait(philo->arg->pro[philo->philo_num]);
 		if (philo->lastmeal != 0)
 			time = get_time();
 		if (time - philo->lastmeal > (long)philo->arg->time_to_die)
 			print(philo, Died);
-		pthread_mutex_unlock(&(philo->arg->pro[philo->philo_num]));
+		sem_post(philo->arg->pro[philo->philo_num]);
 		ft_wait(8);
 	}
 	return (NULL);

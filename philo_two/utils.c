@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:45 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/23 19:01:18 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/03/26 12:48:35 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	print(t_philo *philo, t_status status)
 {
 	long time;
 
-	pthread_mutex_lock(&(philo->arg->printstatus));
+	sem_wait(philo->arg->printstatus);
 	time = get_time() - philo->arg->start;
 	if (philo->arg->died == 1)
 	{
-		pthread_mutex_unlock(&(philo->arg->printstatus));
+		sem_post(philo->arg->printstatus);
 		return ;
 	}
 	if (status == Fork)
@@ -36,7 +36,7 @@ void	print(t_philo *philo, t_status status)
 		printf("%-2ld %6d died\n", time, philo->philo_num + 1);
 		philo->arg->died = 1;
 	}
-	pthread_mutex_unlock(&(philo->arg->printstatus));
+	sem_post(philo->arg->printstatus);
 }
 
 long	get_time(void)
@@ -85,4 +85,87 @@ int		ft_atoi(const char *str)
 		str++;
 	}
 	return (ans * sign);
+}
+
+char	*ft_inttochar(int n)
+{
+	int l;
+	int mem;
+	char *s;
+
+	l = 0;
+	mem = n;
+	while (n != 0)
+	{
+		n = n/10;
+		l++;
+	}
+	if (!(s = (char *)malloc(sizeof(char *) * (l + 1))))
+	{
+		printf("Malloc in ft_inttochar failed, sorry\n");
+		return (NULL);
+	}
+	if (mem == 0)
+		return ("0");
+	s[l] = '\0';
+	l--;
+	while (mem != 0)
+	{
+		s[l] = '0' + (mem % 10);
+		mem = mem/10;
+		l--;
+	}
+	return (s);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	unsigned int i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*res;
+	size_t	calc;
+	int		i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	calc = ft_strlen(s1) + ft_strlen(s2);
+	if (!(res = (char *)malloc(sizeof(char) * (calc + 1))))
+		return (NULL);
+	while (*s1)
+	{
+		res[i] = *(s1++);
+		i++;
+	}
+	while (*s2)
+	{
+		res[i] = *(s2++);
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
+}
+
+size_t		ft_strcpy(char *dst, const char *src)
+{
+	size_t i;
+	size_t j;
+	
+	i = ft_strlen(src);
+	j = 0;
+	while (j < i)
+	{
+		dst[j] = src[j];
+		j++;
+	}
+	dst[j] = '\0';
+	return (0);
 }
