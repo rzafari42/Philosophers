@@ -6,11 +6,11 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:00:06 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/25 20:00:45 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/03/30 16:08:54 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "philo_two.h"
 
 int		meals_eaten(t_philo *philo)
 {
@@ -24,7 +24,7 @@ int		meals_eaten(t_philo *philo)
 	return (stop);
 }
 
-void	*check_die_cond(void *philosopher)
+void	*supervisord(void *philosopher)
 {
 	t_philo	*philo;
 	long	time;
@@ -33,12 +33,12 @@ void	*check_die_cond(void *philosopher)
 	philo = (t_philo *)philosopher;
 	while ((philo->arg->died) != 1 && !meals_eaten(philo))
 	{
-		sem_wait(philo->arg->pro[philo->philo_num]);
+		sem_wait(philo->arg->checkifok[philo->philo_num]);
 		if (philo->lastmeal != 0)
 			time = get_time();
 		if (time - philo->lastmeal > (long)philo->arg->time_to_die)
 			print(philo, Died);
-		sem_post(philo->arg->pro[philo->philo_num]);
+		sem_post(philo->arg->checkifok[philo->philo_num]);
 		ft_wait(8);
 	}
 	return (NULL);

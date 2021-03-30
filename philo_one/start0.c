@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:00:06 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/25 14:15:00 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/03/30 15:59:16 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		meals_eaten(t_philo *philo)
 	return (stop);
 }
 
-void	*check_die_cond(void *philosopher)
+void	*supervisord(void *philosopher)
 {
 	t_philo	*philo;
 	long	time;
@@ -33,12 +33,12 @@ void	*check_die_cond(void *philosopher)
 	philo = (t_philo *)philosopher;
 	while ((philo->arg->died) != 1 && !meals_eaten(philo))
 	{
-		pthread_mutex_lock(&(philo->arg->pro[philo->philo_num]));
+		pthread_mutex_lock(&(philo->arg->checkifok[philo->philo_num]));
 		if (philo->lastmeal != 0)
 			time = get_time();
 		if (time - philo->lastmeal > (long)philo->arg->time_to_die)
 			print(philo, Died);
-		pthread_mutex_unlock(&(philo->arg->pro[philo->philo_num]));
+		pthread_mutex_unlock(&(philo->arg->checkifok[philo->philo_num]));
 		ft_wait(8);
 	}
 	return (NULL);

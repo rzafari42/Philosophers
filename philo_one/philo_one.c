@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:06:18 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/23 17:15:12 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/03/30 15:59:16 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	philo_info_init(t_arg *arg, t_philo **philo)
 	if (!(*philo = (t_philo *)malloc(sizeof(t_philo) * arg->nb_philos)) ||
 	!(arg->fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) *
 	arg->nb_philos)) ||
-	!(arg->pro = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) *
+	!(arg->checkifok = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) *
 	arg->nb_philos)))
 	{
 		printf("Malloc philo in philo_info_init failed, sorry\n");

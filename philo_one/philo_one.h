@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:49 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/22 18:46:36 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/03/30 16:52:10 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct	s_arg
 	int					condstop;
 	long				start;
 	pthread_mutex_t		*fork;
-	pthread_mutex_t		*pro;
+	pthread_mutex_t		*checkifok;
 	pthread_mutex_t		printstatus;
 	pthread_mutex_t		checkifstop;
 }				t_arg;
@@ -78,7 +78,6 @@ void			sleeping(t_philo *philo);
 void			thinking(t_philo *philo);
 void			print(t_philo *philo, t_status status);
 void			*philo_start(void *arg);
-void			*check_die_cond(void *philosopher);
+void			*supervisord(void *philosopher);
 
-void			printtest(t_arg *args);
 #endif

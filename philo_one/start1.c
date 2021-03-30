@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:00:23 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/23 17:14:31 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/03/30 15:59:16 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,17 @@ void	take_fork(t_philo *philo)
 	else
 		pthread_mutex_lock(&philo->arg->fork[philo->philo_num - 1]);
 	print(philo, Fork);
+	print(philo, Fork);
 }
 
 void	eating(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->arg->pro[philo->philo_num]);
+	pthread_mutex_lock(&philo->arg->checkifok[philo->philo_num]);
 	print(philo, Eat);
 	philo->mealnum++;
 	philo->lastmeal = get_time();
 	ft_wait(philo->arg->time_to_eat);
-	pthread_mutex_unlock(&philo->arg->pro[philo->philo_num]);
+	pthread_mutex_unlock(&philo->arg->checkifok[philo->philo_num]);
 }
 
 void	drop_fork(t_philo *philo)

@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:45 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/23 19:01:18 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/03/30 16:52:17 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,6 @@ void	ft_wait(long timetowait)
 	time = get_time();
 	while (get_time() < time + timetowait)
 		usleep(500);
-}
-
-void	printtest(t_arg *args)
-{
-	printf("nb_philos = %d\n", args->nb_philos);
-	printf("time_to_die = %d\n", args->time_to_die);
-	printf("time_to_eat = %d\n", args->time_to_eat);
-	printf("time_to_sleep = %d\n", args->time_to_sleep);
-	printf("nb_must_eat = %d\n", args->nb_must_eat);
 }
 
 int		ft_atoi(const char *str)

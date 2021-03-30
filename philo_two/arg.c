@@ -6,11 +6,11 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:41 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/18 17:06:03 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/03/30 16:08:54 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "philo_two.h"
 
 int		checking(int ac)
 {

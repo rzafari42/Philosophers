@@ -1,6 +1,6 @@
 
 NAME = philo_two
-HEADER = philo_one.h
+HEADER = philo_two.h
 CC = gcc
 CLFAGS = -Wall -Wextra -Werror -lpthread
 SRC = $(wildcard *.c)

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_one.h                                        :+:      :+:    :+:   */
+/*   philo_two.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:49 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/25 20:49:25 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/03/30 16:52:24 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_ONE_H
-# define PHILO_ONE_H
+#ifndef PHILO_TWO_H
+# define PHILO_TWO_H
 # include <unistd.h>
 # include <sys/time.h>
 # include <pthread.h>
@@ -19,6 +19,11 @@
 # include <stdio.h>
 # include <string.h>
 # include <stdlib.h>
+# define SEM_FORKS "forks"
+# define SEM_PRO "/pro"
+# define SEM_PRINT "/print"
+# define SEM_CHECK "/check"
+# define SEM_PRO_NAME "philo_"
 
 typedef struct	s_arg
 {
@@ -30,9 +35,9 @@ typedef struct	s_arg
 	int					died;
 	int					condstop;
 	long				start;
-	char *				*protection_num;
+	char				**checkifok_num;
 	sem_t				*fork;
-	sem_t				**pro;
+	sem_t				**checkifok;
 	sem_t				*printstatus;
 	sem_t				*checkifstop;
 }				t_arg;
@@ -82,7 +87,7 @@ void			sleeping(t_philo *philo);
 void			thinking(t_philo *philo);
 void			print(t_philo *philo, t_status status);
 void			*philo_start(void *arg);
-void			*check_die_cond(void *philosopher);
+void			*supervisord(void *philosopher);
 
 char			*ft_strjoin(char *s1, char *s2);
 char			*ft_inttochar(int n);
@@ -90,5 +95,4 @@ char			*ft_inttochar(int n);
 size_t			ft_strlen(const char *s);
 size_t			ft_strcpy(char *dst, const char *src);
 
-void			printtest(t_arg *args);
 #endif

@@ -6,11 +6,11 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:45 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/26 12:48:35 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/03/30 16:51:51 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "philo_two.h"
 
 void	print(t_philo *philo, t_status status)
 {
@@ -56,15 +56,6 @@ void	ft_wait(long timetowait)
 		usleep(500);
 }
 
-void	printtest(t_arg *args)
-{
-	printf("nb_philos = %d\n", args->nb_philos);
-	printf("time_to_die = %d\n", args->time_to_die);
-	printf("time_to_eat = %d\n", args->time_to_eat);
-	printf("time_to_sleep = %d\n", args->time_to_sleep);
-	printf("nb_must_eat = %d\n", args->nb_must_eat);
-}
-
 int		ft_atoi(const char *str)
 {
 	int sign;
@@ -87,85 +78,31 @@ int		ft_atoi(const char *str)
 	return (ans * sign);
 }
 
-char	*ft_inttochar(int n)
+void	destroy(t_philo **philo, int nb_philo, int iffree)
 {
-	int l;
-	int mem;
-	char *s;
-
-	l = 0;
-	mem = n;
-	while (n != 0)
-	{
-		n = n/10;
-		l++;
-	}
-	if (!(s = (char *)malloc(sizeof(char *) * (l + 1))))
-	{
-		printf("Malloc in ft_inttochar failed, sorry\n");
-		return (NULL);
-	}
-	if (mem == 0)
-		return ("0");
-	s[l] = '\0';
-	l--;
-	while (mem != 0)
-	{
-		s[l] = '0' + (mem % 10);
-		mem = mem/10;
-		l--;
-	}
-	return (s);
-}
-
-size_t	ft_strlen(const char *s)
-{
-	unsigned int i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*res;
-	size_t	calc;
 	int		i;
 
 	i = 0;
-	if (!s1 || !s2)
-		return (NULL);
-	calc = ft_strlen(s1) + ft_strlen(s2);
-	if (!(res = (char *)malloc(sizeof(char) * (calc + 1))))
-		return (NULL);
-	while (*s1)
+	(void)nb_philo;
+	while (i < nb_philo)
 	{
-		res[i] = *(s1++);
+		sem_close((*philo)->arg->checkifok[i]);
+		sem_unlink((*philo)->arg->checkifok_num[i]);
+		if (iffree)
+			free((*philo)->arg->checkifok_num[i]);
 		i++;
 	}
-	while (*s2)
+	sem_close((*philo)->arg->fork);
+	sem_close((*philo)->arg->printstatus);
+	sem_close((*philo)->arg->checkifstop);
+	sem_unlink(SEM_PRO);
+	sem_unlink(SEM_FORKS);
+	sem_unlink(SEM_PRINT);
+	sem_unlink(SEM_CHECK);
+	if (iffree)
 	{
-		res[i] = *(s2++);
-		i++;
+		free((*philo)->arg->checkifok_num);
+		free((*philo)->arg->checkifok);
+		free(*philo);
 	}
-	res[i] = '\0';
-	return (res);
-}
-
-size_t		ft_strcpy(char *dst, const char *src)
-{
-	size_t i;
-	size_t j;
-	
-	i = ft_strlen(src);
-	j = 0;
-	while (j < i)
-	{
-		dst[j] = src[j];
-		j++;
-	}
-	dst[j] = '\0';
-	return (0);
 }

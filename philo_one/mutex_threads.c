@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:36 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/23 17:14:51 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/03/30 15:59:16 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		create_mutex(t_philo **philo, int nb_philo)
 	while (i < nb_philo)
 	{
 		if ((pthread_mutex_init(&(*philo)[i].arg->fork[i], NULL) != 0) &&
-		(pthread_mutex_init(&(*philo)[i].arg->pro[i], NULL) != 0))
+		(pthread_mutex_init(&(*philo)[i].arg->checkifok[i], NULL) != 0))
 		{
 			printf("Mutex initalization failed\n");
 			return (0);
@@ -50,7 +50,7 @@ int		create_thread(t_philo **philo, int nb_philo)
 			return (0);
 		}
 		if (pthread_create(&((*philo)[i].checkifdie), NULL,
-		check_die_cond, &(*philo)[i]) != 0)
+		supervisord, &(*philo)[i]) != 0)
 		{
 			printf("Failed while creating threads\n");
 			return (0);
@@ -77,7 +77,7 @@ int		create_thread_next(t_philo **philo, int nb_philo)
 			return (0);
 		}
 		if (pthread_create(&((*philo)[i].checkifdie), NULL,
-		check_die_cond, &(*philo)[i]) != 0)
+		supervisord, &(*philo)[i]) != 0)
 		{
 			printf("Failed while creating threads\n");
 			return (0);
@@ -117,12 +117,12 @@ void	destroy(t_philo **philo, int nb_philo)
 	while (i < nb_philo)
 	{
 		pthread_mutex_destroy(&((*philo)[i].arg->fork[i]));
-		pthread_mutex_destroy(&((*philo)[i].arg->pro[i]));
+		pthread_mutex_destroy(&((*philo)[i].arg->checkifok[i]));
 		pthread_mutex_destroy(&((*philo)[i].arg->printstatus));
 		pthread_mutex_destroy(&((*philo)[i].arg->checkifstop));
 		i++;
 	}
 	free((*philo)->arg->fork);
-	free((*philo)->arg->pro);
+	free((*philo)->arg->checkifok);
 	free(*philo);
 }

@@ -6,11 +6,11 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:06:18 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/25 21:57:32 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/03/30 16:08:54 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "philo_two.h"
 
 int	philo_info_init(t_arg *arg, t_philo **philo)
 {
@@ -18,7 +18,7 @@ int	philo_info_init(t_arg *arg, t_philo **philo)
 
 	i = 0;
 	if (!(*philo = (t_philo *)malloc(sizeof(t_philo) * arg->nb_philos)) ||
-	!(arg->pro = malloc(sizeof(sem_t *) * arg->nb_philos)))
+	!(arg->checkifok = malloc(sizeof(sem_t *) * arg->nb_philos)))
 	{
 		printf("Malloc philo in philo_info_init failed, sorry\n");
 		return (0);
