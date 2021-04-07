@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:36 by rzafari           #+#    #+#             */
-/*   Updated: 2021/04/04 22:01:07 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/04/07 19:54:27 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,14 @@ void	endproc(t_philo **philo)
 	int	i;
 	int	status;
 
-	i = 0;
 	waitpid(-1, &status, 0);
-	ft_wait(20);
-	if (WEXITSTATUS(status) == SIG_END)
+	if (WEXITSTATUS(status) == SIG_DIED)
 	{
+		i = 0;
 		while (i < (*philo)->arg->nb_philos)
 		{
-			kill((*philo)[i].proc, SIGINT);
+			if ((*philo)[i].proc)
+				kill((*philo)[i].proc, SIGINT);
 			i++;
 		}
 	}
@@ -94,8 +94,14 @@ void	lets_fork(t_philo **philo)
 		}
 		else if ((*philo)[i].proc == 0)
 			philo_start(&(*philo)[i]);
+		usleep(10);
 		i += 1;
 	}
-	endproc(philo);
+	i = 0;
+	while (i < (*philo)->arg->nb_philos)
+	{
+		endproc(philo);
+		i++;
+	}
 	return ;
 }

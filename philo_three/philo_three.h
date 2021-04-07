@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:49 by rzafari           #+#    #+#             */
-/*   Updated: 2021/04/04 20:45:55 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/04/07 18:03:02 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 # define SEM_PRINT "/print"
 # define SEM_CHECK "/check"
 # define SEM_PRO_NAME "philo_"
-# define SIG_END		10
+# define SIG_DIED		10
+# define SIG_EAT		20
 
 typedef struct	s_arg
 {

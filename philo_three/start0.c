@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:00:06 by rzafari           #+#    #+#             */
-/*   Updated: 2021/04/04 21:42:59 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/04/07 18:03:03 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int		meals_eaten(t_philo *philo)
 
 	stop = 0;
 	sem_wait(philo->arg->checkifstop);
-	if (philo->arg->nb_must_eat && philo->mealnum == philo->arg->nb_must_eat)
+	if (philo->arg->nb_must_eat &&
+	philo->mealnum == philo->arg->nb_must_eat)
 		stop = 1;
 	sem_post(philo->arg->checkifstop);
 	return (stop);
@@ -39,7 +40,7 @@ void	*supervisord(void *philosopher)
 			if (get_time() - philo->lastmeal > (long)philo->arg->time_to_die)
 			{
 				print(philo, Died);
-				exit(SIG_END);
+				exit(SIG_DIED);
 			}
 		}
 		sem_post(philo->arg->checkifok[philo->philo_num]);
@@ -58,6 +59,7 @@ void	*philo_start(void *arg)
 		printf("Failed while creating supervisord thread\n");
 		return (0);
 	}
+	pthread_detach(th);
 	while (philo->arg->died != 1)
 	{
 		take_fork(philo);
@@ -65,9 +67,9 @@ void	*philo_start(void *arg)
 		drop_fork(philo);
 		if (philo->arg->nb_must_eat &&
 		philo->mealnum == philo->arg->nb_must_eat)
-			exit(SIG_END);
+			break ;
 		sleeping(philo);
 		print(philo, Think);
 	}
-	return (NULL);
+	exit(SIG_EAT);
 }

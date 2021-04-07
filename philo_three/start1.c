@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:00:23 by rzafari           #+#    #+#             */
-/*   Updated: 2021/04/04 22:01:44 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/04/07 15:52:45 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	eating(t_philo *philo)
 	sem_wait(philo->arg->checkifok[philo->philo_num]);
 	print(philo, Eat);
 	philo->mealnum++;
-	//philo->lastmeal = get_time();
+	philo->lastmeal = get_time();
 	ft_wait(philo->arg->time_to_eat);
 	sem_post(philo->arg->checkifok[philo->philo_num]);
 }

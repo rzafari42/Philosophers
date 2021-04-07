@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:45 by rzafari           #+#    #+#             */
-/*   Updated: 2021/04/04 22:01:44 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/04/07 19:55:03 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ void	print(t_philo *philo, t_status status)
 	if (status == Fork)
 		printf("%-2ld %6d has taken a fork\n", time, philo->philo_num + 1);
 	if (status == Eat)
-	{
-		philo->lastmeal = get_time();
 		printf("%-2ld %6d is eating\n", time, philo->philo_num + 1);
-	}
 	else if (status == Sleep)
 		printf("%-2ld %6d is sleeping\n", time, philo->philo_num + 1);
 	else if (status == Think)
