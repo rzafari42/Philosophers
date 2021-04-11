@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:45 by rzafari           #+#    #+#             */
-/*   Updated: 2021/04/08 14:20:56 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/04/11 21:31:28 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 void	print(t_philo *philo, t_status status)
 {
 	long time;
-	long gettime;
 
 	sem_wait(philo->arg->printstatus);
-	gettime = get_time();
-	time = gettime - philo->arg->start;
+	time = get_time() - philo->arg->start;
 	if (philo->arg->died == 1)
 	{
 		sem_post(philo->arg->printstatus);
@@ -38,7 +36,8 @@ void	print(t_philo *philo, t_status status)
 		printf("%-2ld %6d died\n", time, philo->philo_num + 1);
 		philo->arg->died = 1;
 	}
-	sem_post(philo->arg->printstatus);
+	if (status != Died)
+		sem_post(philo->arg->printstatus);
 }
 
 long	get_time(void)
@@ -85,7 +84,6 @@ void	destroy(t_philo **philo, int nb_philo, int iffree)
 	int		i;
 
 	i = 0;
-	(void)nb_philo;
 	while (i < nb_philo)
 	{
 		sem_close((*philo)->arg->checkifok[i]);

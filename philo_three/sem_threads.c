@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:36 by rzafari           #+#    #+#             */
-/*   Updated: 2021/04/07 19:54:27 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/04/09 19:56:18 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,22 @@ void	endproc(t_philo **philo)
 	int	i;
 	int	status;
 
-	waitpid(-1, &status, 0);
-	if (WEXITSTATUS(status) == SIG_DIED)
+	i = 0;
+	while (i < (*philo)->arg->nb_philos)
 	{
-		i = 0;
-		while (i < (*philo)->arg->nb_philos)
+		waitpid(-1, &status, 0);
+		if (WEXITSTATUS(status) == SIG_DIED)
 		{
-			if ((*philo)[i].proc)
-				kill((*philo)[i].proc, SIGINT);
-			i++;
+			i = 0;
+			while (i < (*philo)->arg->nb_philos)
+			{
+				if ((*philo)[i].proc)
+					kill((*philo)[i].proc, SIGINT);
+				i++;
+			}
+			break ;
 		}
+		i++;
 	}
 }
 
@@ -94,14 +100,30 @@ void	lets_fork(t_philo **philo)
 		}
 		else if ((*philo)[i].proc == 0)
 			philo_start(&(*philo)[i]);
-		usleep(10);
-		i += 1;
+		i += 2;
 	}
-	i = 0;
+	ft_wait(4);
+	lets_fork_next(philo);
+}
+
+void	lets_fork_next(t_philo **philo)
+{
+	int	i;
+
+	i = 1;
 	while (i < (*philo)->arg->nb_philos)
 	{
-		endproc(philo);
-		i++;
+		(*philo)[i].proc = fork();
+		if ((*philo)[i].proc == -1)
+		{
+			printf("forking issue\n");
+			endproc(philo);
+			return ;
+		}
+		else if ((*philo)[i].proc == 0)
+			philo_start(&(*philo)[i]);
+		i += 2;
 	}
+	endproc(philo);
 	return ;
 }

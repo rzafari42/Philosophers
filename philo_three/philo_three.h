@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:49 by rzafari           #+#    #+#             */
-/*   Updated: 2021/04/07 18:03:02 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/04/09 19:55:46 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void			thinking(t_philo *philo);
 void			print(t_philo *philo, t_status status);
 void			*philo_start(void *arg);
 void			lets_fork(t_philo **philo);
+void			lets_fork_next(t_philo **philo);
 void			*supervisord(void *philosopher);
 
 char			*ft_strjoin(char *s1, char *s2);

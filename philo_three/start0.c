@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:00:06 by rzafari           #+#    #+#             */
-/*   Updated: 2021/04/07 18:03:03 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/04/11 20:42:56 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,7 @@ void	*philo_start(void *arg)
 		sleeping(philo);
 		print(philo, Think);
 	}
-	exit(SIG_EAT);
+	if (philo->arg->died)
+		exit(SIG_DIED);
+	exit(0);
 }

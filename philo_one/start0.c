@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:00:06 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/30 15:59:16 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/04/08 17:48:31 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,8 @@ void	*supervisord(void *philosopher)
 void	*philo_start(void *arg)
 {
 	t_philo	*philo;
-	long	time;
 
 	philo = (t_philo *)arg;
-	time = 0;
 	while (philo->arg->died != 1 && !meals_eaten(philo))
 	{
 		take_fork(philo);
