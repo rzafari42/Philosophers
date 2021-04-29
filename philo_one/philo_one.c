@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:06:18 by rzafari           #+#    #+#             */
-/*   Updated: 2021/04/09 16:02:54 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/04/29 19:28:12 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	main(int ac, char **av)
 		return (0);
 	if (!philo_info_init(&arg, &philo)
 	|| !start_time(&arg)
-	|| !create_mutex(&philo, arg.nb_philos)
+	|| !create_mutex(&philo, &arg)
 	|| !create_thread(&philo, arg.nb_philos))
 	{
 		destroy(&philo, arg.nb_philos);

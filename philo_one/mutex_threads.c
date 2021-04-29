@@ -6,29 +6,30 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:36 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/30 15:59:16 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/04/29 19:27:45 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-int		create_mutex(t_philo **philo, int nb_philo)
+int		create_mutex(t_philo **philo, t_arg *arg)
 {
 	int i;
 
 	i = 0;
-	while (i < nb_philo)
+	(void)philo;
+	while (i < arg->nb_philos)
 	{
-		if ((pthread_mutex_init(&(*philo)[i].arg->fork[i], NULL) != 0) &&
-		(pthread_mutex_init(&(*philo)[i].arg->checkifok[i], NULL) != 0))
+		if ((pthread_mutex_init(&(arg->fork[i]), NULL) != 0) &&
+		(pthread_mutex_init(&(arg->checkifok[i]), NULL) != 0))
 		{
 			printf("Mutex initalization failed\n");
 			return (0);
 		}
 		i++;
 	}
-	if ((pthread_mutex_init(&(*philo)->arg->printstatus, NULL) != 0) &&
-	(pthread_mutex_init(&(*philo)->arg->checkifstop, NULL) != 0))
+	if ((pthread_mutex_init(&(arg->printstatus), NULL) != 0) &&
+	(pthread_mutex_init(&(arg->checkifstop), NULL) != 0))
 	{
 		printf("Mutex initalization failed\n");
 		return (0);
@@ -50,7 +51,7 @@ int		create_thread(t_philo **philo, int nb_philo)
 			return (0);
 		}
 		if (pthread_create(&((*philo)[i].checkifdie), NULL,
-		supervisord, &(*philo)[i]) != 0)
+		supervisord, &((*philo)[i])) != 0)
 		{
 			printf("Failed while creating threads\n");
 			return (0);
@@ -70,14 +71,14 @@ int		create_thread_next(t_philo **philo, int nb_philo)
 	i = 1;
 	while (i < nb_philo)
 	{
-		if (pthread_create(&((*philo)[i].threads), NULL,
-		philo_start, &(*philo)[i]) != 0)
+		if ((pthread_create(&((*philo)[i].threads), NULL,
+		philo_start, &(*philo)[i]) != 0))
 		{
 			printf("Failed while creating threads\n");
 			return (0);
 		}
 		if (pthread_create(&((*philo)[i].checkifdie), NULL,
-		supervisord, &(*philo)[i]) != 0)
+		supervisord, &((*philo)[i])) != 0)
 		{
 			printf("Failed while creating threads\n");
 			return (0);

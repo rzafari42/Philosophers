@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:49 by rzafari           #+#    #+#             */
-/*   Updated: 2021/04/08 17:50:18 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/04/29 19:29:19 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ typedef enum	e_status
 	Eat,
 	Sleep,
 	Think,
-	Died
+	Died,
 }				t_status;
 
 int				args(int ac, char **av, t_arg *arg);
 int				checking(int ac);
 int				check_arg(int ac, t_arg *arg);
-int				create_mutex(t_philo **philo, int nb_philo);
+int				create_mutex(t_philo **philo, t_arg *arg);
 int				create_thread(t_philo **philo, int nb_philo);
 int				create_thread_next(t_philo **philo, int nb_philo);
 int				wait_threads(t_philo **philo, int nb_philo);

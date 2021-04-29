@@ -6,7 +6,7 @@
 /*   By: rzafari <rzafari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 17:05:41 by rzafari           #+#    #+#             */
-/*   Updated: 2021/03/23 18:59:25 by rzafari          ###   ########.fr       */
+/*   Updated: 2021/04/29 14:27:32 by rzafari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	catch_arg(int ac, char **av, t_arg *arg)
 	arg->time_to_sleep = ft_atoi((const char *)av[4]);
 	if (ac == 6)
 		arg->nb_must_eat = ft_atoi((const char *)av[5]);
+	else
+		arg->nb_must_eat = 0;
 }
 
 int		check_arg(int ac, t_arg *arg)
