@@ -14,6 +14,9 @@
 # define PHILO_TWO_H
 # include <unistd.h>
 # include <sys/time.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 # include <pthread.h>
 # include <semaphore.h>
 # include <stdio.h>

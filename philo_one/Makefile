@@ -14,14 +14,16 @@
 NAME = philo_one
 HEADER = philo_one.h
 CC = gcc
-CLFAGS = -Wall -Wextra -Werror -lpthread
+CLFAGS = -Wall -Wextra -Werror -pthread
 SRC = $(wildcard *.c)
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
+.c.o:
+		$(CC) $(CLFAGS) -c $< -o $@
 $(NAME):  $(OBJ)
-		$(CC) $(CLFAGS) -I $(HEADER) $(SRC) -o $(NAME)
+		@$(CC) $(CLFAGS) $(OBJ) -I $(HEADER) -o $(NAME)
 
 clean:
 	rm -f $(OBJ)

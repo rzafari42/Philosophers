@@ -28,9 +28,7 @@ int		meals_eaten(t_philo *philo)
 void	*supervisord(void *philosopher)
 {
 	t_philo	*philo;
-	long	time;
 
-	time = 0;
 	philo = (t_philo *)philosopher;
 	while (philo->arg->died != 1 && !meals_eaten(philo))
 	{

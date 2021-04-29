@@ -47,10 +47,8 @@ void	*supervisord(void *philosopher)
 void	*philo_start(void *arg)
 {
 	t_philo	*philo;
-	long	time;
 
 	philo = (t_philo *)arg;
-	time = 0;
 	while (philo->arg->died != 1 && !meals_eaten(philo))
 	{
 		take_fork(philo);
