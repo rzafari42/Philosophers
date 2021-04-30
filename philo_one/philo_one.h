@@ -57,7 +57,7 @@ typedef enum	e_status
 int				args(int ac, char **av, t_arg *arg);
 int				checking(int ac);
 int				check_arg(int ac, t_arg *arg);
-int				create_mutex(t_philo **philo, t_arg *arg);
+int				create_mutex(t_arg *arg);
 int				create_thread(t_philo **philo, int nb_philo);
 int				create_thread_next(t_philo **philo, int nb_philo);
 int				wait_threads(t_philo **philo, int nb_philo);
@@ -77,7 +77,7 @@ void			eating(t_philo *philo);
 void			sleeping(t_philo *philo);
 void			thinking(t_philo *philo);
 void			print(t_philo *philo, t_status status);
-void			*philo_start(void *arg);
+void			*philo_start(void *philosopher);
 void			*supervisord(void *philosopher);
 
 #endif

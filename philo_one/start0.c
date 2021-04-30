@@ -46,14 +46,14 @@ void	*supervisord(void *philosopher)
 	return (NULL);
 }
 
-void	*philo_start(void *arg)
+void	*philo_start(void *philosopher)
 {
 	t_philo	*philo;
-	t_arg	*argu;
+	t_arg	*arg;
 
-	philo = (t_philo *)arg;
-	argu = philo->arg;
-	while (argu->died != 1 && !meals_eaten(philo))
+	philo = (t_philo *)philosopher;
+	arg = philo->arg;
+	while (arg->died != 1 && !meals_eaten(philo))
 	{
 		take_fork(philo);
 		eating(philo);

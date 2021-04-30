@@ -12,28 +12,19 @@
 
 #include "philo_one.h"
 
-int		create_mutex(t_philo **philo, t_arg *arg)
+int		create_mutex(t_arg *arg)
 {
 	int i;
 
 	i = 0;
-	(void)philo;
 	while (i < arg->nb_philos)
 	{
-		if ((pthread_mutex_init(&(arg->fork[i]), NULL) != 0) &&
-		(pthread_mutex_init(&(arg->checkifok[i]), NULL) != 0))
-		{
-			printf("Mutex initalization failed\n");
-			return (0);
-		}
+		pthread_mutex_init(&(arg->fork[i]), 0);
+		pthread_mutex_init(&(arg->checkifok[i]), 0);
 		i++;
 	}
-	if ((pthread_mutex_init(&(arg->printstatus), NULL) != 0) &&
-	(pthread_mutex_init(&(arg->checkifstop), NULL) != 0))
-	{
-		printf("Mutex initalization failed\n");
-		return (0);
-	}
+	pthread_mutex_init(&(arg->printstatus), 0);
+	pthread_mutex_init(&(arg->checkifstop), 0);
 	return (1);
 }
 

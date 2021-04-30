@@ -18,10 +18,8 @@ int	philo_info_init(t_arg *arg, t_philo **philo)
 
 	i = 0;
 	if (!(*philo = (t_philo *)malloc(sizeof(t_philo) * arg->nb_philos)) ||
-	!(arg->fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) *
-	arg->nb_philos)) ||
-	!(arg->checkifok = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) *
-	arg->nb_philos)))
+	!(arg->fork = malloc(sizeof(pthread_mutex_t) * arg->nb_philos)) ||
+	!(arg->checkifok = malloc(sizeof(pthread_mutex_t) * arg->nb_philos)))
 	{
 		printf("Malloc philo in philo_info_init failed, sorry\n");
 		return (0);
@@ -30,6 +28,8 @@ int	philo_info_init(t_arg *arg, t_philo **philo)
 	{
 		(*philo)[i].arg = arg;
 		(*philo)[i].philo_num = i;
+		(*philo)[i].mealnum = 0;
+		(*philo)[i].lastmeal = arg->start;
 		i++;
 	}
 	return (1);
@@ -54,7 +54,7 @@ int	main(int ac, char **av)
 		return (0);
 	if (!philo_info_init(&arg, &philo)
 	|| !start_time(&arg)
-	|| !create_mutex(&philo, &arg)
+	|| !create_mutex(&arg)
 	|| !create_thread(&philo, arg.nb_philos))
 	{
 		destroy(&philo, arg.nb_philos);
