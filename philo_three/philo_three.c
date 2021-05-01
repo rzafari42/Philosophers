@@ -27,6 +27,8 @@ int	philo_info_init(t_arg *arg, t_philo **philo)
 	{
 		(*philo)[i].arg = arg;
 		(*philo)[i].philo_num = i;
+		(*philo)[i].mealnum = 0;
+		(*philo)[i].lastmeal = arg->start;
 		i++;
 	}
 	return (1);

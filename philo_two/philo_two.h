@@ -26,7 +26,7 @@
 # define SEM_PRO "/pro"
 # define SEM_PRINT "/print"
 # define SEM_CHECK "/check"
-# define SEM_PRO_NAME "philo_"
+# define SEM_PRO_NAME "/philo_"
 
 typedef struct	s_arg
 {
